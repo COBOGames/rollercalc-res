@@ -3,7 +3,7 @@
     "data": {
         "list": [
             {
-                "name": "Update the application",
+                "name": "Update the app",
                 "description": "Download the new new version from the Play Store.",
                 "levels": 1,
                 "path": "250220-update-app",
