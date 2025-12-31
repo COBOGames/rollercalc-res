@@ -1345,6 +1345,14 @@
                 "path": "251226-the-elfs-lootlab",
                 "from": "26/12/2025",
                 "to": "29/12/2025"
+            },
+            {
+                "name": "The Rising Portrait",
+                "description": "",
+                "levels": 40,
+                "path": "251230-the-rising-portrait",
+                "from": "30/12/2025",
+                "to": "01/01/2026"
             }
         ]
     },
