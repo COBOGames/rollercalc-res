@@ -1,0 +1,15 @@
+﻿{
+    "success": true,
+    "data": [
+        { "acronym": "BTC", "min": 0.00085 },
+        { "acronym": "ETH", "min": 0.014 },
+        { "acronym": "BNB", "min": 0.06 },
+        { "acronym": "MATIC", "min": 300 },
+        { "acronym": "LTC", "min": 5 },
+        { "acronym": "DOGE", "min": 220 },
+        { "acronym": "SOL", "min": 0.6 },
+        { "acronym": "TRX", "min": 300 },
+        { "acronym": "XRP", "min": 40 }
+    ],
+    "error": ""
+}
