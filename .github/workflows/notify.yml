@@ -1,0 +1,65 @@
+# Sends the RollerCalc push notifications (FCM) when a new event or new miners are pushed.
+# It can also be run by hand from the Actions tab ("Run workflow") to send a test.
+# Needs the secret FIREBASE_SERVICE_ACCOUNT (Firebase service account key JSON).
+
+name: Push notifications
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'progression-event-list/**'
+      - 'miner-list/details.json'
+  workflow_dispatch:
+    inputs:
+      type:
+        description: 'Notification type'
+        type: choice
+        options: [new_event, new_miners]
+        default: new_event
+      name:
+        description: 'new_event: event name'
+        required: false
+      path:
+        description: 'new_event: event folder in progression-event-list'
+        required: false
+      count:
+        description: 'new_miners: number of new miners'
+        required: false
+      debug:
+        description: 'Only debug builds (debug_ topics)'
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+
+# one at a time, so two quick pushes don't send the same notification twice
+concurrency:
+  group: push-notifications
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Send notifications
+        run: node .github/scripts/notify.mjs
+        env:
+          FIREBASE_SERVICE_ACCOUNT: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          BEFORE: ${{ github.event.before }}
+          AFTER: ${{ github.sha }}
+          INPUT_TYPE: ${{ inputs.type }}
+          INPUT_NAME: ${{ inputs.name }}
+          INPUT_PATH: ${{ inputs.path }}
+          INPUT_COUNT: ${{ inputs.count }}
+          INPUT_DEBUG: ${{ inputs.debug }}
